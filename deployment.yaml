@@ -6,7 +6,7 @@ metadata:
   name: currency-conversion
   namespace: default
 spec:
-  git : 4  #CHANGE
+  git : 7  #CHANGE
   minReadySeconds: 50
   selector:
     matchLabels:
