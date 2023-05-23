@@ -20,7 +20,7 @@ jobs:
               echo See https://aka.ms/yaml
               echo more info
               displayName: 'Run a multi-line script'
-  - job: job1
+  - job: job2
     steps:
     - script: echo Hello, updated!
       displayName: 'Run a one-line script'
