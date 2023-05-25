@@ -25,4 +25,3 @@ jobs:
     - script: echo Hello, updated!
       displayName: 'Run a one-line script'
 
-    jobs:
