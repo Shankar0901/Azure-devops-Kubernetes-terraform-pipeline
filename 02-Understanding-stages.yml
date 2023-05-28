@@ -16,38 +16,38 @@ stages:
       - bash: echo build secondjob
       
     
-  - stage: Dev deploy
+  - stage: DevDeploy
     dependsOn: Build
     jobs:
     - job: Firstjob
       steps:
-      - bash: echo Devdeploy Firstjob
+      - bash: echo DevDeploy Firstjob
     - job: secondjob
       steps:
-      - bash: echo Devdeploy secondjob
+      - bash: echo DevDeploy secondjob
 
-  - stage: QA deploy
-    dependsOn: Dev deploy
+  - stage: QADeploy
+    dependsOn: Devdeploy
     jobs:
     - job: Firstjob
       steps:
-      - bash: echo  QA deploy Firstjob
+      - bash: echo  QADeploy Firstjob
     - job: secondjob
       steps:
-      - bash: echo  QA deploy secondjob
+      - bash: echo  QADeploy secondjob
       
-  - stage: Prod deploy
+  - stage: ProDeploy
     dependsOn:
      - Build
-     - Dev deploy
-     - QA deploy
+     - DevDeploy
+     - QADeploy
     jobs:
     - job: Firstjob
       steps:
-      - bash: echo build Firstjob
+      - bash: echo ProDeploy Firstjob
     - job: secondjob
       steps:
-      - bash: echo build secondjob
+      - bash: echo ProDeploy secondjob
   
 
 
