@@ -9,9 +9,8 @@ stages:
   - stage: Build
     jobs:
     - job: Firstjob
-      steps:
-      - bash: echo build Firstjob
-      - bash: $(Pipelinelevelvariable)
+      steps: 
+      - bash: echo $(Pipelinelevelvariable) Deploy job
 
     - job: secondjob
       steps:
