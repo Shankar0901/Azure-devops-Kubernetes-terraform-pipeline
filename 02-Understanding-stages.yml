@@ -10,51 +10,57 @@ stages:
     jobs:
     - job: Firstjob
       steps: 
-      - bash: echo $(Pipelinelevelvariable) Deploy job
+      - bash: echo $(Build.ArtifactStagingDirectory) 
+      - bash: echo $(Build.BuildId) 
+      - bash: echo $(Build.BuildNumbe) 
+      - bash: echo $(Build.Repository.Name) 
+      - bash: echo $(Build.SourceBranch) 
+      - bash: echo $(Build.SourceBranch) 
+      - bash: echo $(Build.ArtifactStagingDirectory) 
+      - bash: ls -R $(System.DefaultWorkingDirectory)
 
-    - job: secondjob
-      steps:
-      - bash: echo build secondjob
+
+ 
       
     
-  - stage: DevDeploy
-    variables:
-     environment: Dev
-    dependsOn: Build
-    jobs:
-    - job: Firstjob
-      steps:
-      - bash: echo $(environment) Firstjob
-    - job: secondjob
-      steps:
-      - bash: echo $(environment) secondjob
+  # - stage: DevDeploy
+  #   variables:
+  #    environment: Dev
+  #   dependsOn: Build
+  #   jobs:
+  #   - job: Firstjob
+  #     steps:
+  #     - bash: echo $(environment) Firstjob
+  #   - job: secondjob
+  #     steps:
+  #     - bash: echo $(environment) secondjob
 
-  - stage: QADeploy
-    variables:
-     environment: QA
-    dependsOn: Build
-    jobs:
-    - job: Firstjob
-      steps:
-      - bash: echo   $(environment) Firstjob
-    - job: secondjob
-      steps:
-      - bash: echo  $(environment) secondjob
+  # - stage: QADeploy
+  #   variables:
+  #    environment: QA
+  #   dependsOn: Build
+  #   jobs:
+  #   - job: Firstjob
+  #     steps:
+  #     - bash: echo   $(environment) Firstjob
+  #   - job: secondjob
+  #     steps:
+  #     - bash: echo  $(environment) secondjob
       
-  - stage: ProdDeploy
-    variables:
-     environment: Prod
-    dependsOn:
-     - Build
-     - DevDeploy
-     - QADeploy
-    jobs:
-    - job: Firstjob
-      steps:
-      - bash: echo $(environment) Firstjob
-    - job: secondjob
-      steps:
-      - bash: echo $(environment) secondjob
+  # - stage: ProdDeploy
+  #   variables:
+  #    environment: Prod
+  #   dependsOn:
+  #    - Build
+  #    - DevDeploy
+  #    - QADeploy
+  #   jobs:
+  #   - job: Firstjob
+  #     steps:
+  #     - bash: echo $(environment) Firstjob
+  #   - job: secondjob
+  #     steps:
+  #     - bash: echo $(environment) secondjob
   
 
 
