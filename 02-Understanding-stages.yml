@@ -12,7 +12,7 @@ stages:
       steps: 
       - bash: echo $(Build.ArtifactStagingDirectory) 
       - bash: echo $(Build.BuildId) 
-      - bash: echo $(Build.BuildNumbe) 
+      - bash: echo $(Build.BuildNumber) 
       - bash: echo $(Build.Repository.Name) 
       - bash: echo $(Build.SourceBranch) 
       - bash: echo $(Build.SourceBranch) 
