@@ -20,7 +20,7 @@ stages:
       - bash: echo $(Build.ArtifactStagingDirectory) 
       - bash: ls -R $(Build.ArtifactStagingDirectory) 
 
-# clcik on show assistant to add new task and search copy file
+# clcik on show assistant to add new task and search copy file from one dir to another dir
       - task: CopyFiles@2
         inputs:
           SourceFolder: '$(System.DefaultWorkingDirectory)'
@@ -28,7 +28,13 @@ stages:
             **/*.yaml
             **/*.tf
           TargetFolder: '$(Build.ArtifactStagingDirectory)'
-      - bash: ls -R $(Build.ArtifactStagingDirectory) 
+      - bash: ls -R $(Build.ArtifactStagingDirectory)
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
+
 
 
 
