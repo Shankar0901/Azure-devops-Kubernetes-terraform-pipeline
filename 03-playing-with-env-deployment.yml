@@ -1,0 +1,24 @@
+
+
+trigger:
+- main
+
+#to run the jobs on diffrent agents we will confiugure strategy matric
+
+
+strategy:
+ matrix:
+  linux :
+    operatingSystem: 'ubuntu-latest'
+  mac:
+    operatingSystem: 'macos-latest'
+ 
+# so here we are using dynamic vmImage to run of two agents
+pool:
+  vmImage: $(operatingSystem)
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+
