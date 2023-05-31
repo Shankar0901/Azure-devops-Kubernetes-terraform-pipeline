@@ -11,13 +11,26 @@ stages:
     - job: Firstjob
       steps: 
       - bash: echo $(Build.ArtifactStagingDirectory) 
+      - bash: ls -R $(System.DefaultWorkingDirectory)
       - bash: echo $(Build.BuildId) 
       - bash: echo $(Build.BuildNumber) 
       - bash: echo $(Build.Repository.Name) 
       - bash: echo $(Build.SourceBranch) 
       - bash: echo $(Build.SourceBranch) 
       - bash: echo $(Build.ArtifactStagingDirectory) 
-      - bash: ls -R $(System.DefaultWorkingDirectory)
+      - bash: ls -R $(Build.ArtifactStagingDirectory) 
+
+# clcik on show assistant to add new task and search copy file
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: '$(System.DefaultWorkingDirectory)'
+          Contents: |
+            **/*.yaml
+            **/*.tf
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      - bash: ls -R $(Build.ArtifactStagingDirectory) 
+
+
 
 
  
