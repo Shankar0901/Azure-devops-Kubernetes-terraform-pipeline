@@ -3,22 +3,37 @@
 trigger:
 - main
 
-#to run the jobs on diffrent agents we will confiugure strategy matric
 
-
-strategy:
- matrix:
-  linux :
-    operatingSystem: 'ubuntu-latest'
-  mac:
-    operatingSystem: 'macos-latest'
  
-# so here we are using dynamic vmImage to run of two agents
 pool:
-  vmImage: $(operatingSystem)
+  vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+  - stage: Build
+    jobs:
+      - job: Buildjob
+        steps:
+          - bash: echo build job
+# here we are using deployment in the place of job to get additionalm features
+  - stage: DevDeploy
+    jobs:
+      - deployment: DevDeployjob
+        environment: Dev
+        strategy:
+         runOnce:
+            deploy:
+               steps:
+                 - bash: echo deploy to dev
+  - stage: QADeploy
+    jobs:
+      - deployment: QADeployjob
+        environment: QA
+        strategy:
+         runOnce:
+            deploy:
+               steps:
+                 - bash: echo deploy to QA
+         
 
+# after this ru  you need to select cheks and approvals to give permisson move to stage 
 
