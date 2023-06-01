@@ -32,7 +32,7 @@ stages:
          runOnce:
             deploy:
                steps:
-                 - bash: echo deploy to QA
+                 - bash: echo deploy tooo QA
          
 
 # after this ru  you need to select cheks and approvals to give permisson move to stage 
