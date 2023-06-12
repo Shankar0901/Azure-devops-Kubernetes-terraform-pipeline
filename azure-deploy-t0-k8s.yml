@@ -1,0 +1,66 @@
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+# 2 stages for deploy to kubernetes
+# stage1 :build docker image and publish K8s configuration files to  artifact
+# stage2:download K8s configuration files and able to deploy
+
+
+# stage1 :biuld docker and pulish K8s configuration files artifact
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'sankar1999-docker-hub'
+        repository: 'sankar1999/currency-exchange-devops'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: '**/*.yaml'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'manifest'
+        publishLocation: 'Container'
+
+# stage2:download K8s configuration files and able to deploy
+
+- stage: Deploy
+  displayName: Deploy image
+  jobs:  
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: 'current'
+          artifactName: 'manifest'
+          itemPattern: '**/*.yaml'
+          targetPath: '$(system.ArtifactsDirectory)'
+      - task: KubernetesManifest@1
+        inputs:
+          action: 'deploy'
+          connectionType: 'kubernetesServiceConnection'
+          namespace: 'Default'
+          manifests: '$(system.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
+          containers: 'sankar1999/currency-exchange-devop:$(tag)'
