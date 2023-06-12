@@ -24,7 +24,7 @@ stages:
     steps:
     - task: Docker@2
       inputs:
-        containerRegistry: 'in28min-docker-hub'
+        containerRegistry: 'sankar1999-docker-hub'
         repository: 'sankar1999/currency-exchange-devo'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
