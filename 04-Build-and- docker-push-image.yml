@@ -30,7 +30,7 @@ stages:
       displayName: Build an image
       inputs:
         containerRegistry: 'sankar1999-docker-hub'
-        repository: 'sankar1999/currency-exchange-devops'
+        repository: 'sankar1999/currency-exchange-d'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
